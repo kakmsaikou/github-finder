@@ -1,5 +1,5 @@
 const App = () => {
-  return <h1 className='text-red-500'>Hello World</h1>;
+  return <button className="btn">Hello daisyUI</button>
 };
 
 export default App;
