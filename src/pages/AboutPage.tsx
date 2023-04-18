@@ -1,4 +1,4 @@
-const About = () => {
+const AboutPage = () => {
   return (
     <>
       <h1 className='text-6xl mb-4'>Github Finder</h1>
@@ -29,4 +29,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutPage;

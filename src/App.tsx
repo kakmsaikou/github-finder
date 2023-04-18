@@ -1,9 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import NotFound from './pages/NotFound';
-import About from './pages/About';
-import Home from './pages/Home';
+import NotFoundPage from './pages/NotFoundPage';
+import AboutPage from './pages/AboutPage';
+import HomePage from './pages/HomePage';
 
 const App = () => {
   return (
@@ -12,9 +12,9 @@ const App = () => {
         <Navbar title='Hello World' />
         <main className='container mx-auto px-3 pb-12'>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/*' element={<NotFound />} />
+            <Route path='/' element={<HomePage />} />
+            <Route path='/about' element={<AboutPage />} />
+            <Route path='/*' element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />

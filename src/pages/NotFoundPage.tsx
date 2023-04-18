@@ -1,7 +1,7 @@
 import { FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div className='hero'>
       <div className='text-center hero-content'>
@@ -18,4 +18,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundPage;
