@@ -12,7 +12,7 @@ const App = () => {
         <Navbar title='Hello World' />
         <main className='container mx-auto px-3 pb-12'>
           <Routes>
-            <Route path='/home' element={<Home />} />
+            <Route path='/' element={<Home />} />
             <Route path='/about' element={<About />} />
             <Route path='/*' element={<NotFound />} />
           </Routes>
