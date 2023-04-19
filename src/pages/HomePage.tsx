@@ -1,8 +1,12 @@
+import UserResults from '../components/users/UserResults';
+
 const HomePage = () => {
+  console.log(import.meta.env.VITE_REACT_APP_GITHUB_URL); // 123
+
   return (
-    <div>
-      <h1 className='text-6xl'>Welcome</h1>
-    </div>
+    <>
+      <UserResults />
+    </>
   );
 };
 
