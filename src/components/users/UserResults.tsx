@@ -17,12 +17,11 @@ const UserResults = () => {
     const response = await fetch(
       `${import.meta.env.VITE_REACT_APP_GITHUB_URL}/users`,
       {
-        // headers: {
-        //   Authorization: `token ${import.meta.env.VITE_REACT_APP_GITHUB_TOKEN}`,
-        // },
+        headers: {
+          Authorization: `token ${import.meta.env.VITE_REACT_APP_GITHUB_TOKEN}`,
+        },
       }
     );
-
     const data = await response.json();
 
     setUsers(data);
