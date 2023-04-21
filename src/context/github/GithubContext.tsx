@@ -21,16 +21,17 @@ const GITHUB_URL = import.meta.env.VITE_REACT_APP_GITHUB_URL;
 const GITHUB_TOKEN = import.meta.env.VITE_REACT_APP_GITHUB_TOKEN;
 
 export const GithubProvider = ({ children }: Props) => {
-  // const [users, setUsers] = useState([] as User[]);
-  // const [loading, setLoading] = useState(true);
-  const initialState = {
+  const [state, dispatch] = useReducer(githubReducer, {
     users: [],
-    loading: true,
-  };
-
-  const [state, dispatch] = useReducer(githubReducer, initialState);
+    loading: false,
+  });
 
   const fetchUsers = async () => {
+    dispatch({
+      type: GithubActionType.SET_LOADING,
+      payload: state.users,
+    });
+
     const response = await fetch(
       `${GITHUB_URL}/users`
       // ,{
