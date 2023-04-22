@@ -4,13 +4,13 @@ import { githubReducer, GithubActionType } from './GithubReducer';
 interface GithubContextType {
   users: User[];
   loading: boolean;
-  fetchUsers: () => void;
+  searchUsers: (text: string) => void;
 }
 
 export const GithubContext = createContext<GithubContextType>({
   users: [],
   loading: false,
-  fetchUsers: () => {},
+  searchUsers: () => {},
 });
 
 interface Props {
@@ -26,25 +26,28 @@ export const GithubProvider = ({ children }: Props) => {
     loading: false,
   });
 
-  const fetchUsers = async () => {
+  const searchUsers = async (text: string) => {
     dispatch({
       type: GithubActionType.SET_LOADING,
-      payload: state.users,
+    });
+
+    const params = new URLSearchParams({
+      q: text,
     });
 
     const response = await fetch(
-      `${GITHUB_URL}/users`
+      `${GITHUB_URL}/search/users?${params}`
       // ,{
       //   headers: {
       //     Authorization: `token ${GITHUB_TOKEN}`,
       //   },
       // }
     );
-    const data = await response.json();
+    const { items } = await response.json();
 
     dispatch({
       type: GithubActionType.GET_USERS,
-      payload: data,
+      payload: items,
     });
   };
 
@@ -53,7 +56,7 @@ export const GithubProvider = ({ children }: Props) => {
       value={{
         users: state.users,
         loading: state.loading,
-        fetchUsers,
+        searchUsers,
       }}
     >
       {children}

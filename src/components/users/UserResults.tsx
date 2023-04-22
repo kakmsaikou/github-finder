@@ -4,7 +4,7 @@ import { GithubContext } from '../../context/github/GithubContext';
 import Spinner from '../layout/Spinner';
 
 const UserResults = () => {
-  const { users, loading, fetchUsers } = useContext(GithubContext);
+  const { users, loading, searchUsers: fetchUsers } = useContext(GithubContext);
 
   useEffect(() => {
     // fetchUsers();
