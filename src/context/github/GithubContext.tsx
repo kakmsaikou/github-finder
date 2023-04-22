@@ -26,10 +26,14 @@ export const GithubProvider = ({ children }: Props) => {
     loading: false,
   });
 
-  const searchUsers = async (text: string) => {
+  const setLoading = () => {
     dispatch({
       type: GithubActionType.SET_LOADING,
     });
+  };
+
+  const searchUsers = async (text: string) => {
+    setLoading();
 
     const params = new URLSearchParams({
       q: text,
