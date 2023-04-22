@@ -9,7 +9,7 @@ interface GithubContextType {
 
 export const GithubContext = createContext<GithubContextType>({
   users: [],
-  loading: true,
+  loading: false,
   fetchUsers: () => {},
 });
 
