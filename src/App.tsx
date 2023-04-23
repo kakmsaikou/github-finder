@@ -5,23 +5,26 @@ import NotFoundPage from './pages/NotFoundPage';
 import AboutPage from './pages/AboutPage';
 import HomePage from './pages/HomePage';
 import { GithubProvider } from './context/github/GithubContext';
+import { AlterProvider } from './context/alert/AlertContext';
 
 const App = () => {
   return (
     <GithubProvider>
-      <Router>
-        <div className='flex flex-col justify-between h-screen'>
-          <Navbar />
-          <main className='container mx-auto px-3 pb-12'>
-            <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/about' element={<AboutPage />} />
-              <Route path='/*' element={<NotFoundPage />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
+      <AlterProvider>
+        <Router>
+          <div className='flex flex-col justify-between h-screen'>
+            <Navbar />
+            <main className='container mx-auto px-3 pb-12'>
+              <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/about' element={<AboutPage />} />
+                <Route path='/*' element={<NotFoundPage />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </AlterProvider>
     </GithubProvider>
   );
 };
