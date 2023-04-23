@@ -5,12 +5,14 @@ interface GithubContextType {
   users: User[];
   loading: boolean;
   searchUsers: (text: string) => void;
+  clearUsers: () => void;
 }
 
 export const GithubContext = createContext<GithubContextType>({
   users: [],
   loading: false,
   searchUsers: () => {},
+  clearUsers: () => {},
 });
 
 interface Props {
@@ -55,12 +57,19 @@ export const GithubProvider = ({ children }: Props) => {
     });
   };
 
+  const clearUsers = () => {
+    dispatch({
+      type: GithubActionType.CLEAR_USERS,
+    });
+  };
+
   return (
     <GithubContext.Provider
       value={{
         users: state.users,
         loading: state.loading,
         searchUsers,
+        clearUsers,
       }}
     >
       {children}

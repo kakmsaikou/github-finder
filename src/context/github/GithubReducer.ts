@@ -1,6 +1,7 @@
 export enum GithubActionType {
   GET_USERS = 'GET_USERS',
   SET_LOADING = 'SET_LOADING',
+  CLEAR_USERS = 'CLEAR_USERS',
 }
 
 interface GithubState {
@@ -24,6 +25,11 @@ export const githubReducer = (
         ...state,
         users: payload ?? [],
         loading: false,
+      };
+    case GithubActionType.CLEAR_USERS:
+      return {
+        ...state,
+        users: [],
       };
     case GithubActionType.SET_LOADING:
       return {
