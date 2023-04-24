@@ -6,6 +6,7 @@ import AboutPage from './pages/AboutPage';
 import HomePage from './pages/HomePage';
 import { GithubProvider } from './context/github/GithubContext';
 import { AlterProvider } from './context/alert/AlertContext';
+import Alert from './components/layout/Alert';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <div className='flex flex-col justify-between h-screen'>
             <Navbar />
             <main className='container mx-auto px-3 pb-12'>
+              <Alert />
               <Routes>
                 <Route path='/' element={<HomePage />} />
                 <Route path='/about' element={<AboutPage />} />
