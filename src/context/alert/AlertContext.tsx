@@ -1,13 +1,13 @@
 import { createContext, useReducer } from 'react';
-import { AlertActionType, alertReducer } from './AlertReducer';
+import { AlertActionType, AlertState, alertReducer } from './AlertReducer';
 
 interface AlertContextType {
-  alert: string;
-  setAlert: (msg: string) => void;
+  alert: AlertState;
+  setAlert: (msg: string, type: string) => void;
 }
 
 export const AlertContext = createContext<AlertContextType>({
-  alert: '',
+  alert: null,
   setAlert: () => {},
 });
 
@@ -16,12 +16,12 @@ interface Props {
 }
 
 export const AlterProvider = ({ children }: Props) => {
-  const [state, dispatch] = useReducer(alertReducer, '');
+  const [state, dispatch] = useReducer(alertReducer, null);
 
-  const setAlert = (msg: string) => {
+  const setAlert = (msg: string, type: string) => {
     dispatch({
       type: AlertActionType.SET_ALERT,
-      payload: msg,
+      payload: { msg, type },
     });
 
     setTimeout(() => {

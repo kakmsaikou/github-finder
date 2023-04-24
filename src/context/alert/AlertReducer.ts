@@ -3,21 +3,25 @@ export enum AlertActionType {
   REMOVE_ALERT = 'REMOVE_ALERT',
 }
 
-// interface AlertState {
-//   msg: string;
-// }
+export type AlertState = {
+  msg: string;
+  type: string;
+} | null;
 
 interface AlertAction {
   type: AlertActionType;
-  payload?: string;
+  payload?: AlertState;
 }
 
-export const alertReducer = (state: string, action: AlertAction): string => {
+export const alertReducer = (
+  state: AlertState,
+  action: AlertAction
+): AlertState => {
   switch (action.type) {
     case 'SET_ALERT':
-      return action.payload ?? '';
+      return action.payload ?? null;
     case 'REMOVE_ALERT':
-      return '';
+      return null;
     default:
       return state;
   }
