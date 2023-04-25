@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import { GithubProvider } from './context/github/GithubContext';
 import { AlterProvider } from './context/alert/AlertContext';
 import Alert from './components/layout/Alert';
+import UserPage from './pages/UserPage';
 
 const App = () => {
   return (
@@ -19,7 +20,9 @@ const App = () => {
               <Alert />
               <Routes>
                 <Route path='/' element={<HomePage />} />
+                <Route path='/user/:login' element={<UserPage />} />
                 <Route path='/about' element={<AboutPage />} />
+                <Route path='notfound' element={<NotFoundPage />} />
                 <Route path='/*' element={<NotFoundPage />} />
               </Routes>
             </main>

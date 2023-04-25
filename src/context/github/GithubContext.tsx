@@ -1,17 +1,22 @@
 import { createContext, useReducer } from 'react';
 import { githubReducer, GithubActionType } from './GithubReducer';
+import { useNavigate } from 'react-router-dom';
 
 interface GithubContextType {
   users: User[];
+  user: User;
   loading: boolean;
   searchUsers: (text: string) => void;
+  getUser: (login: string) => void;
   clearUsers: () => void;
 }
 
 export const GithubContext = createContext<GithubContextType>({
   users: [],
+  user: {} as User,
   loading: false,
   searchUsers: () => {},
+  getUser: () => {},
   clearUsers: () => {},
 });
 
@@ -26,6 +31,7 @@ export const GithubProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(githubReducer, {
     users: [],
     loading: false,
+    user: {} as User,
   });
 
   const setLoading = () => {
@@ -53,8 +59,32 @@ export const GithubProvider = ({ children }: Props) => {
 
     dispatch({
       type: GithubActionType.GET_USERS,
-      payload: items,
+      users: items,
     });
+  };
+
+  const getUser = async (login: string) => {
+    setLoading();
+
+    const response = await fetch(
+      `${GITHUB_URL}/users/${login}`
+      // ,{
+      //   headers: {
+      //     Authorization: `token ${GITHUB_TOKEN}`,
+      //   },
+      // }
+    );
+
+    if (response.status === 404) {
+      const navigate = useNavigate();
+      navigate('/notfound');
+    } else {
+      const data = await response.json();
+      dispatch({
+        type: GithubActionType.GET_USER,
+        user: data,
+      });
+    }
   };
 
   const clearUsers = () => {
@@ -67,8 +97,10 @@ export const GithubProvider = ({ children }: Props) => {
     <GithubContext.Provider
       value={{
         users: state.users,
+        user: state.user,
         loading: state.loading,
         searchUsers,
+        getUser,
         clearUsers,
       }}
     >
