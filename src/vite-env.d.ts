@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-
 // avatar_url:"https://avatars.githubusercontent.com/u/19692?v=4"
 // bio:null
 // blog:"https://dev.bleacherreport.com/"
@@ -20,7 +19,7 @@
 // location:"San Francisco, CA"
 // login:"br"
 // name:"Bleacher Report"
-// new entry: 
+// new entry:
 // node_id:"MDEyOk9yZ2FuaXphdGlvbjE5Njky"
 // organizations_url:"https://api.github.com/users/br/orgs"
 // public_gists:2
@@ -51,4 +50,8 @@ interface User {
   public_repos: number;
   twitter_username: string;
   type: string;
+}
+
+interface Repo {
+  name: string;
 }

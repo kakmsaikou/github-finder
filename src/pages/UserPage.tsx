@@ -13,9 +13,11 @@ import {
   FaUsers,
   FaUtensils,
 } from 'react-icons/fa';
+import RepoList from '../components/repos/RepoList';
 
 const UserPage = () => {
-  const { getUser, user, loading } = useContext(GithubContext);
+  const { user, loading, repos, getUser, getUserRepos } =
+    useContext(GithubContext);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const UserPage = () => {
   useEffect(() => {
     if (params.login) {
       getUser(params.login);
+      getUserRepos(params.login);
     } else {
       navigate('/notfound');
     }
@@ -172,6 +175,8 @@ const UserPage = () => {
             </div>
           </div>
         </div>
+
+        <RepoList repos={repos} />
       </div>
     </>
   );

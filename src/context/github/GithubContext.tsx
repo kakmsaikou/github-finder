@@ -5,18 +5,22 @@ import { useNavigate } from 'react-router-dom';
 interface GithubContextType {
   users: User[];
   user: User;
+  repos: Repo[];
   loading: boolean;
   searchUsers: (text: string) => void;
   getUser: (login: string) => void;
+  getUserRepos: (login: string) => void;
   clearUsers: () => void;
 }
 
 export const GithubContext = createContext<GithubContextType>({
   users: [],
   user: {} as User,
+  repos: [],
   loading: false,
   searchUsers: () => {},
   getUser: () => {},
+  getUserRepos: () => {},
   clearUsers: () => {},
 });
 
@@ -32,6 +36,7 @@ export const GithubProvider = ({ children }: Props) => {
     users: [],
     loading: false,
     user: {} as User,
+    repos: [],
   });
 
   const setLoading = () => {
@@ -87,6 +92,31 @@ export const GithubProvider = ({ children }: Props) => {
     }
   };
 
+  const getUserRepos = async (login: string) => {
+    setLoading();
+
+    const params = new URLSearchParams({
+      sort: 'created',
+      per_page: '10',
+    });
+
+    const response = await fetch(
+      `${GITHUB_URL}/users/${login}/repos?${params}`
+      // ,{
+      //   headers: {
+      //     Authorization: `token ${GITHUB_TOKEN}`,
+      //   },
+      // }
+    );
+
+    const data = await response.json();
+
+    dispatch({
+      type: GithubActionType.GET_REPOS,
+      repos: data,
+    });
+  };
+
   const clearUsers = () => {
     dispatch({
       type: GithubActionType.CLEAR_USERS,
@@ -98,9 +128,11 @@ export const GithubProvider = ({ children }: Props) => {
       value={{
         users: state.users,
         user: state.user,
+        repos: state.repos,
         loading: state.loading,
         searchUsers,
         getUser,
+        getUserRepos,
         clearUsers,
       }}
     >

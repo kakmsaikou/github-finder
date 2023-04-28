@@ -1,6 +1,7 @@
 export enum GithubActionType {
   GET_USERS = 'GET_USERS',
   GET_USER = 'GET_USER',
+  GET_REPOS = 'GET_REPOS',
   SET_LOADING = 'SET_LOADING',
   CLEAR_USERS = 'CLEAR_USERS',
 }
@@ -8,6 +9,7 @@ export enum GithubActionType {
 interface GithubState {
   users: User[];
   user: User;
+  repos: Repo[];
   loading: boolean;
 }
 
@@ -15,13 +17,14 @@ interface UserAction {
   type: GithubActionType;
   users?: User[];
   user?: User;
+  repos?: Repo[];
 }
 
 export const githubReducer = (
   state: GithubState,
   action: UserAction
 ): GithubState => {
-  const { type, users, user } = action;
+  const { type, users, user, repos } = action;
   switch (type) {
     case GithubActionType.GET_USERS:
       return {
@@ -33,6 +36,12 @@ export const githubReducer = (
       return {
         ...state,
         user: user ?? ({} as User),
+        loading: false,
+      };
+    case GithubActionType.GET_REPOS:
+      return {
+        ...state,
+        repos: repos ?? [],
         loading: false,
       };
     case GithubActionType.CLEAR_USERS:
