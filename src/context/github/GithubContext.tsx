@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import { githubReducer, GithubActionType } from './GithubReducer';
+import { githubReducer, GithubActionType, UserAction } from './GithubReducer';
 import { useNavigate } from 'react-router-dom';
 
 interface GithubContextType {
@@ -7,6 +7,7 @@ interface GithubContextType {
   user: User;
   repos: Repo[];
   loading: boolean;
+  dispatch: React.Dispatch<UserAction>;
   searchUsers: (text: string) => void;
   getUser: (login: string) => void;
   getUserRepos: (login: string) => void;
@@ -18,6 +19,7 @@ export const GithubContext = createContext<GithubContextType>({
   user: {} as User,
   repos: [],
   loading: false,
+  dispatch: () => {},
   searchUsers: () => {},
   getUser: () => {},
   getUserRepos: () => {},
@@ -126,10 +128,8 @@ export const GithubProvider = ({ children }: Props) => {
   return (
     <GithubContext.Provider
       value={{
-        users: state.users,
-        user: state.user,
-        repos: state.repos,
-        loading: state.loading,
+        ...state,
+        dispatch,
         searchUsers,
         getUser,
         getUserRepos,

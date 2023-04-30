@@ -13,7 +13,7 @@ interface GithubState {
   loading: boolean;
 }
 
-interface UserAction {
+export interface UserAction {
   type: GithubActionType;
   users?: User[];
   user?: User;
