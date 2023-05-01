@@ -2,30 +2,34 @@ import { useContext, useEffect } from 'react';
 import { GithubContext } from '../context/github/GithubContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../components/layout/Spinner';
-import {
-  FaCodepen,
-  FaEye,
-  FaInfo,
-  FaLink,
-  FaStar,
-  FaStore,
-  FaUserFriends,
-  FaUsers,
-  FaUtensils,
-} from 'react-icons/fa';
+import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa';
 import RepoList from '../components/repos/RepoList';
+import { GithubActionType } from '../context/github/GithubReducer';
+import { getUser, getUserRepos } from '../context/github/GithubActions';
 
 const UserPage = () => {
-  const { user, loading, repos, getUser, getUserRepos } =
-    useContext(GithubContext);
+  const { user, loading, repos, dispatch } = useContext(GithubContext);
 
   const params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (params.login) {
-      getUser(params.login);
-      getUserRepos(params.login);
+      dispatch({ type: GithubActionType.SET_LOADING });
+      const getUserData = async () => {
+        const userData = (await getUser(params.login!)) as User;
+        dispatch({
+          type: GithubActionType.GET_USER,
+          user: userData,
+        });
+
+        const userReposData = await getUserRepos(params.login!);
+        dispatch({
+          type: GithubActionType.GET_REPOS,
+          repos: userReposData,
+        });
+      };
+      getUserData();
     } else {
       navigate('/notfound');
     }
@@ -47,12 +51,9 @@ const UserPage = () => {
     public_gists,
     hireable,
   } = user;
-
-  if (loading) {
-    return <Spinner />;
-  }
-
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <>
       <div className='w-full mx-auto lg:w-10/12'>
         <div className='mb-4'>
