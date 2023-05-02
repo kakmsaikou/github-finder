@@ -5,7 +5,7 @@ import Spinner from '../components/layout/Spinner';
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa';
 import RepoList from '../components/repos/RepoList';
 import { GithubActionType } from '../context/github/GithubReducer';
-import { getUser, getUserRepos } from '../context/github/GithubActions';
+import { getUserAndRepos } from '../context/github/GithubActions';
 
 const UserPage = () => {
   const { user, loading, repos, dispatch } = useContext(GithubContext);
@@ -17,16 +17,11 @@ const UserPage = () => {
     if (params.login) {
       dispatch({ type: GithubActionType.SET_LOADING });
       const getUserData = async () => {
-        const userData = (await getUser(params.login!)) as User;
+        const userData = await getUserAndRepos(params.login!);
         dispatch({
-          type: GithubActionType.GET_USER,
-          user: userData,
-        });
-
-        const userReposData = await getUserRepos(params.login!);
-        dispatch({
-          type: GithubActionType.GET_REPOS,
-          repos: userReposData,
+          type: GithubActionType.GET_USER_AND_REPOS,
+          user: userData.user,
+          repos: userData.repos,
         });
       };
       getUserData();

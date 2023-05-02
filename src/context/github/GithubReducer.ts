@@ -1,7 +1,6 @@
 export enum GithubActionType {
   GET_USERS = 'GET_USERS',
-  GET_USER = 'GET_USER',
-  GET_REPOS = 'GET_REPOS',
+  GET_USER_AND_REPOS = 'GET_USER_AND_REPOS',
   SET_LOADING = 'SET_LOADING',
   CLEAR_USERS = 'CLEAR_USERS',
 }
@@ -32,15 +31,10 @@ export const githubReducer = (
         users: users ?? [],
         loading: false,
       };
-    case GithubActionType.GET_USER:
+    case GithubActionType.GET_USER_AND_REPOS:
       return {
         ...state,
         user: user ?? ({} as User),
-        loading: false,
-      };
-    case GithubActionType.GET_REPOS:
-      return {
-        ...state,
         repos: repos ?? [],
         loading: false,
       };
